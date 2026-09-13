@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Командный центр входящих задач</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Командный центр входящих задач</h1>
+    <div class="header-date" id="current-date"></div>
+  </header>
+
+  <main class="main">
+    <section class="kpi" id="kpi-container"></section>
+
+    <section class="filters">
+      <input type="text" id="search-input" placeholder="Поиск по тексту, проекту, исполнителю…">
+      <select id="filter-source">
+        <option value="">Источник: Все</option>
+        <option value="почта">почта</option>
+        <option value="рабочий чат">рабочий чат</option>
+        <option value="встреча">встреча</option>
+        <option value="форма внутренних запросов">форма внутренних запросов</option>
+        <option value="поручение руководителя">поручение руководителя</option>
+      </select>
+      <select id="filter-project">
+        <option value="">Проект: Все</option>
+        <option value="Орион">Орион</option>
+        <option value="Весенняя рекламная кампания">Весенняя рекламная кампания</option>
+        <option value="Вебинар для клиентов">Вебинар для клиентов</option>
+        <option value="Переезд в CRM">Переезд в CRM</option>
+        <option value="Операционная отчётность">Операционная отчётность</option>
+        <option value="Материалы для отдела продаж">Материалы для отдела продаж</option>
+        <option value="Адаптация сотрудников">Адаптация сотрудников</option>
+        <option value="Обновление базы знаний">Обновление базы знаний</option>
+        <option value="Квартальное планирование">Квартальное планирование</option>
+        <option value="Финансовые документы">Финансовые документы</option>
+        <option value="HR-документы">HR-документы</option>
+      </select>
+      <select id="filter-priority">
+        <option value="">Приоритет: Все</option>
+        <option value="high">Высокий</option>
+        <option value="medium">Средний</option>
+        <option value="low">Низкий</option>
+      </select>
+      <select id="filter-data">
+        <option value="">Данные: Все</option>
+        <option value="full">Полные</option>
+        <option value="missing">Требует уточнения</option>
+      </select>
+      <button id="reset-btn" class="reset-btn" style="display: none;">Сбросить фильтры</button>
+    </section>
+
+    <div class="layout">
+      <div class="col-left">
+        <section class="section">
+          <h2>Фокус дня</h2>
+          <div id="focus-list"></div>
+        </section>
+
+        <section class="section">
+          <h2>Все запросы</h2>
+          <div id="empty-state" class="empty-state" style="display: none;">
+            <div class="empty-state-text">Ничего не найдено</div>
+            <div class="empty-state-hint">Попробуйте изменить фильтры или сбросить параметры поиска.</div>
+            <button class="reset-btn" onclick="resetFilters()">Сбросить</button>
+          </div>
+          <div id="table-body" class="table-container"></div>
+        </section>
+      </div>
+
+      <div class="col-right">
+        <section class="section">
+          <h2>Нагрузка по команде</h2>
+          <div id="workload-list"></div>
+        </section>
+
+        <section class="section" id="duplicates-section">
+          <h2>Возможные дубли</h2>
+          <div id="duplicates-list"></div>
+        </section>
+
+        <section class="section">
+          <h2>Сводка для планёрки</h2>
+          <div id="summary-text" class="summary-text"></div>
+          <button id="copy-btn" class="copy-btn" onclick="copySummary()">Копировать сводку</button>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    var dateEl = document.getElementById("current-date");
+    if (dateEl) {
+      var now = new Date();
+      dateEl.textContent = now.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+    }
+  </script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
